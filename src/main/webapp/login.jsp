@@ -1,8 +1,11 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <html>
     <body>
         <h1>Hello</h1>
 
-        <form class="login-form" method="POST" action="/media-server/login">
+        <form class="login-form" method="POST" action="/login">
             <div class="login-form_row">
                 <label for="login">Login</label><input id="login" name="login" type="text"/>
             </div>
