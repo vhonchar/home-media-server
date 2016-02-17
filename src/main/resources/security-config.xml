@@ -24,6 +24,10 @@
                 logout-url="/logout"
                 logout-success-url="/login.jsp?logout"/>
 
+        <!-- Open access to js, css and images -->
+        <sec:intercept-url pattern="/components/**" access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/js/**" access="isAnonymous()" requires-channel="https"/>
+
         <!-- Security access settings Whitelist-->
         <sec:intercept-url pattern="/login**" access="isAnonymous()" requires-channel="https"/>
         <sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" requires-channel="https"/>
