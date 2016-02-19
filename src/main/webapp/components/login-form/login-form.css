@@ -1,0 +1,21 @@
+.login-form-component {
+    display: block;
+    position: relative;
+    margin: auto;
+    width: 173px;
+    height: 93px;
+}
+
+.login-form_row {
+    margin-bottom: 15px;
+}
+
+.login-form-component .submit {
+    position: absolute;
+    display: block;
+    right: 0;
+}
+
+.login-form-component {
+    display: block;
+}

@@ -6,15 +6,15 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
-    <sec:http use-expressions="true">
+    <sec:http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
 
         <!-- Disable cross domain security -->
         <sec:csrf disabled="true"/>
 
         <sec:form-login
                 default-target-url=""
-                authentication-failure-url="/login.jsp?error"
-                login-page="/login.jsp"
+                authentication-failure-url="/index.jsp#login?loginError"
+                login-page="/index.jsp#login"
                 password-parameter="password"
                 username-parameter="login"
                 login-processing-url="/login"
@@ -22,14 +22,14 @@
 
         <sec:logout
                 logout-url="/logout"
-                logout-success-url="/login.jsp?logout"/>
+                logout-success-url="/index.jsp?logout"/>
 
         <!-- Open access to js, css and images -->
-        <sec:intercept-url pattern="/components/**" access="isAnonymous()" requires-channel="https"/>
-        <sec:intercept-url pattern="/js/**" access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/components/**" access="permitAll" requires-channel="https"/>
+        <sec:intercept-url pattern="/clientlibs/**" access="permitAll" requires-channel="https"/>
 
         <!-- Security access settings Whitelist-->
-        <sec:intercept-url pattern="/login**" access="isAnonymous()" requires-channel="https"/>
+        <sec:intercept-url pattern="/index**" access="permitAll" requires-channel="https"/>
         <sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" requires-channel="https"/>
         <sec:intercept-url pattern="/api/user**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
     </sec:http>

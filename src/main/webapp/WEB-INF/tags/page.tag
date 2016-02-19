@@ -3,7 +3,6 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="jwr" uri="http://jawr.net/tags" %>
 
 <%@attribute name="title" required="true" %>
 <%@attribute name="ngMuduleName" required="true" %>
@@ -13,6 +12,8 @@
 <html ng-app="${ngMuduleName}">
     <head>
         <title>${title}</title>
+        <link rel="stylesheet" href="/clientlibs/bundles/common.css">
+        <link rel="stylesheet" href="/clientlibs/bundles/components.css">
     </head>
     <body>
         <div class="page-header">
@@ -21,7 +22,7 @@
                     <jsp:invoke fragment="top"/>
                 </c:when>
                 <c:otherwise>
-                    <jsp:include page="/components/header.jsp"/>
+                    <jsp:include page="/components/header/header.jsp"/>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -30,18 +31,19 @@
           <jsp:doBody/>
         </div>
 
-        <div class="page-footer">
-            <c:choose>
-                <c:when test="${not empty footer}">
-                    <jsp:invoke fragment="footer"/>
-                </c:when>
-                <c:otherwise>
-                    <jsp:include page="/components/footer.jsp"/>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        <c:if test="${not empty footer}">
+            <div class="page-footer">
+                <jsp:invoke fragment="footer"/>
+            </div>
+        </c:if>
 
-        <script type="text/javascript" src="/js/bundles/libs.js"/></script>
-        <script type="text/javascript" src="/js/bundles/components.js"/></script>
+        <script type="text/javascript" src="/clientlibs/bundles/libs.js"/></script>
+
+        <!-- TODO: this is a crutch -->
+        <script type="text/javascript">
+            var ngModule = angular.module('MediaServer', [])
+        </script>
+
+        <script type="text/javascript" src="/clientlibs/bundles/components.js"/></script>
     </body>
 </html>
