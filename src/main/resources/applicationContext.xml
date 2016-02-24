@@ -14,6 +14,17 @@
     <import resource="classpath:jpa-config.xml"/>
 
 
-    <bean id="mapper" class="org.dozer.DozerBeanMapper"/>
+    <bean id="mapper" class="org.dozer.DozerBeanMapper">
+        <property name="mappingFiles">
+            <list>
+                <value>dozerBeanMapping.xml</value>
+            </list>
+        </property>
+        <property name="customConverters">
+            <list>
+                <ref bean="userToUserDtoConverter"/>
+            </list>
+        </property>
+    </bean>
 
 </beans>

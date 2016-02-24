@@ -8,6 +8,7 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -18,39 +19,56 @@ public class Authority implements GrantedAuthority, Serializable {
     @EmbeddedId
     private CompositeKey compositeKey = new CompositeKey();
 
+    @MapsId("userId")
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    public Authority() {
+    }
+
+    public Authority(User user, String role) {
+        compositeKey.setRole(role);
+        compositeKey.setUserId(user.getId());
+        this.user = user;
+    }
+
     @Override
     public String getAuthority() {
         return compositeKey.getRole();
-    }
-
-    public void setUser(User user) {
-        compositeKey.setUser(user);
     }
 
     public void setRole(String role) {
         compositeKey.setRole(role);
     }
 
-    /*
-        The only goal of this class is to create composite private key,
-        so no need to make it public
-     */
-    @Embeddable
-    private static class CompositeKey implements Serializable {
+    public CompositeKey getCompositeKey() {
+        return compositeKey;
+    }
 
-        @ManyToOne
-        @JoinColumn(name = "user_id", referencedColumnName = "id")
-        private User user;
+    public void setCompositeKey(CompositeKey compositeKey) {
+        this.compositeKey = compositeKey;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @Embeddable
+    public static class CompositeKey implements Serializable {
+
+        @Column(name = "user_id")
+        private Long userId;
 
         @Column
         private String role;
 
-        public User getUser() {
-            return user;
-        }
-
-        public void setUser(User user) {
-            this.user = user;
+        public void setUserId(Long userId) {
+            this.userId = userId;
         }
 
         public String getRole() {
@@ -60,10 +78,25 @@ public class Authority implements GrantedAuthority, Serializable {
         public void setRole(String role) {
             this.role = role;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            CompositeKey that = (CompositeKey) o;
+
+            if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+            return !(role != null ? !role.equals(that.role) : that.role != null);
+
+        }
+
+        @Override
+        public int hashCode() {
+            int result = userId != null ? userId.hashCode() : 0;
+            result = 31 * result + (role != null ? role.hashCode() : 0);
+            return result;
+        }
     }
 
-    @Override
-    public String toString() {
-        return compositeKey.getRole();
-    }
 }

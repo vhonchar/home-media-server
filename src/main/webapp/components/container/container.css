@@ -1,14 +1,4 @@
-.container {
-    margin-top: 50px;
-}
-
-.container .tabs {
-}
-
-.container .components-holder {
-}
-
-.tabs .button {
-    display: inline-block;
-    margin-right: 5px;
+.top-bar .active{
+    background-color: #2199e8;
+    color: black;
 }

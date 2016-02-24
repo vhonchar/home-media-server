@@ -14,7 +14,7 @@
         </div>
 
         <div class="page-body">
-            <div container></div>
+            <container></container>
         </div>
 
 

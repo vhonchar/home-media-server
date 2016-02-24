@@ -4,9 +4,17 @@ import java.util.List;
 
 public class UserDto {
 
+    private String id;
     private String login;
     private List<String> roles;
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getLogin() {
         return login;
     }

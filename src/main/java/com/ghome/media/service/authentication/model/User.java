@@ -1,6 +1,5 @@
 package com.ghome.media.service.authentication.model;
 
-import org.dozer.Mapping;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.CascadeType;
@@ -25,12 +24,9 @@ public class User implements UserDetails, Serializable {
     private String password;
 
     @Column
-    @Mapping("login")
     private String login;
 
-    // mapping by property in @EmbeddedId is not supported by JPA 2.0, but it's supported by Hibernate
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "compositeKey.user")
-    @Mapping("roles")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
     private List<Authority> roles;
 
     public Long getId() {
@@ -86,5 +82,9 @@ public class User implements UserDetails, Serializable {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public List<Authority> getRoles() {
+        return roles;
     }
 }
