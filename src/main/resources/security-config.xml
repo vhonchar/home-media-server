@@ -25,13 +25,13 @@
                 logout-success-url="/index.jsp?logout"/>
 
         <!-- Open access to js, css and images -->
-        <sec:intercept-url pattern="/components/**" access="permitAll" requires-channel="https"/>
-        <sec:intercept-url pattern="/clientlibs/**" access="permitAll" requires-channel="https"/>
+        <sec:intercept-url pattern="/components/**" access="permitAll"/>
+        <sec:intercept-url pattern="/clientlibs/**" access="permitAll"/>
 
         <!-- Security access settings Whitelist-->
-        <sec:intercept-url pattern="/index**" access="permitAll" requires-channel="https"/>
-        <sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" requires-channel="https"/>
-        <sec:intercept-url pattern="/api/user**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+        <sec:intercept-url pattern="/index**" access="permitAll"/>
+        <sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
+        <sec:intercept-url pattern="/api/user**" access="hasRole('ROLE_ADMIN')"/>
     </sec:http>
 
     <sec:authentication-manager>
