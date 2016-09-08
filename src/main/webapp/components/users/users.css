@@ -1,0 +1,12 @@
+.users-component .row div {
+    display: inline-block;
+}
+
+.users-component .button.add-user {
+    float: right;
+    font-size: 35px;
+    padding: 0px 0px;
+    width: 37px;
+    height: 37px;
+    border-radius: 50%;
+}
