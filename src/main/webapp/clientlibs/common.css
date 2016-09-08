@@ -1,0 +1,11 @@
+.page-body {
+    margin: auto;
+    min-width: 1000px;
+    max-width: 1600px;
+}
+
+.button {
+    display: block;
+    width: 100px;
+    height: 40px;
+}

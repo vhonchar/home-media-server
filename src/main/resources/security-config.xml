@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:sec="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
+
+    <sec:http use-expressions="true" entry-point-ref="restAuthenticationEntryPoint">
+
+        <!-- Disable cross domain security -->
+        <sec:csrf disabled="true"/>
+
+        <sec:form-login
+                default-target-url=""
+                authentication-failure-url="/index.jsp#login?loginError"
+                login-page="/index.jsp#login"
+                password-parameter="password"
+                username-parameter="login"
+                login-processing-url="/login"
+                always-use-default-target="true"/>
+
+        <sec:logout
+                logout-url="/logout"
+                logout-success-url="/index.jsp?logout"/>
+
+        <!-- Open access to js, css and images -->
+        <sec:intercept-url pattern="/components/**" access="permitAll" requires-channel="https"/>
+        <sec:intercept-url pattern="/clientlibs/**" access="permitAll" requires-channel="https"/>
+
+        <!-- Security access settings Whitelist-->
+        <sec:intercept-url pattern="/index**" access="permitAll" requires-channel="https"/>
+        <sec:intercept-url pattern="/**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')" requires-channel="https"/>
+        <sec:intercept-url pattern="/api/user**" access="hasRole('ROLE_ADMIN')" requires-channel="https"/>
+    </sec:http>
+
+    <sec:authentication-manager>
+        <sec:authentication-provider user-service-ref="userSqlDaoImpl">
+            <sec:password-encoder hash="md5"/>
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+
+</beans>

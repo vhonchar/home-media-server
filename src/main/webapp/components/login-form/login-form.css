@@ -1,0 +1,9 @@
+.login-form-component {
+    margin: auto;
+}
+
+.log-in-form {
+    border: 1px solid #cacaca;
+    padding: 5px;
+    border-radius: 3px;
+}
